@@ -1,0 +1,52 @@
+{
+  "name": "bonder",
+  "version": "0.0.1",
+  "description": "Discover local sport partners",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "lint-staged",
+    "start": "node src/index.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
+  "lint-staged": {
+    "./**/*.js": [
+      "prettier --write",
+      "eslint --fix"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/des-v/bonder.git"
+  },
+  "keywords": [
+    "software-engineering",
+    "node.js",
+    "backend"
+  ],
+  "author": "Desiree Valdes <desireevaldes@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/des-v/bonder/issues"
+  },
+  "homepage": "https://github.com/des-v/bonder#readme",
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4",
+    "husky": "^7.0.2",
+    "lint-staged": "^11.1.2",
+    "prettier": "^2.3.2"
+  },
+  "dependencies": {
+    "colors": "^1.4.0"
+  }
+}
