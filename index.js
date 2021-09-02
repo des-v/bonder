@@ -1,10 +1,6 @@
-// Leave parasports for later
-// class Impairment {
-// 	constructor() {}
-// }
 const Person = require('./person')
-const Sport = require('./sport')
-const Game = require('./game')
+// const Sport = require('./sport')
+// const Game = require('./game')
 const Photo = require('./photo')
 
 const jane = new Person('Jane', 'Doe', 'janedoe@example.com')
