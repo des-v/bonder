@@ -1,5 +1,6 @@
 class Game {
-  constructor(score, duration, level, counter) {
+  constructor(sport, score, duration, level, counter) {
+    this.sport = sport
     this.score = score
     this.duration = duration
     this.level = level
