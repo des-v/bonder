@@ -8,12 +8,14 @@ const john = new Person('John', 'Smith', 'johnsmith@example.com')
 
 const berlinPhoto = new Photo('berlin.jpg')
 const munichPhoto = new Photo('munich.jpg')
+const dresdenPhoto = new Photo('dresden.jpg')
 
 john.addPhoto(berlinPhoto)
 john.addPhoto(munichPhoto)
 john.bio = 'Photographer, landscape specialist'
 
 jane.likePhoto(berlinPhoto)
+jane.addPhoto(dresdenPhoto)
 
 console.log(jane.fullName)
 console.log(jane.profile)
