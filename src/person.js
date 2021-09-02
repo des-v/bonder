@@ -1,4 +1,4 @@
-const colors = require('colors')
+require('colors')
 
 class Person {
   constructor(firstName, lastName, birthDate, pronouns, email) {
