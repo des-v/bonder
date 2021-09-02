@@ -1,3 +1,5 @@
+const colors = require('colors')
+
 class Person {
   constructor(firstName, lastName, birthDate, pronouns, email) {
     this.firstName = firstName
@@ -17,16 +19,16 @@ class Person {
 
   get profile() {
     return `
-        # ${this.fullName} 
+        # ${this.fullName.brightRed.bold} 
         ## Pronouns: ${this.pronouns}
-        ## Bio: ${this.bio}
+        ## Bio: ${this.bio.italic}
 
-        ## Photos: (${this.photos.length})
+        ## ${'Photos:'.white.bold} (${this.photos.length})
 
         ${this.photos
           .map(
-            photo => `### ${photo.filename}
-            💗  ${photo.likedBy.map(person => person.fullName).join(', ')}`
+            photo => `### ${photo.filename.rainbow}
+            💗  ${photo.likedBy.map(person => person.fullName.italic).join(', ')}`
           )
           .join('\n\t')}
 
@@ -52,7 +54,7 @@ class Person {
 
   addSport(sport) {
     this.sports.push(sport)
-    sport.practicedBy.push(this)
+    sport.practiceBy.push(this)
   }
 
   playGame(sport) {
