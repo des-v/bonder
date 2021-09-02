@@ -52,7 +52,7 @@ class Person {
 
   addSport(sport) {
     this.sports.push(sport)
-    sport.practiceBy.push(this)
+    sport.practicedBy.push(this)
   }
 
   playGame(sport) {
