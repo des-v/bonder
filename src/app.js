@@ -12,7 +12,18 @@ const indexRouter = require('./routes/index')
 
 const usersRouter = require('./routes/users')
 
+require('./database-connection')
+
 const app = express()
+
+// if (app.get('env') == 'development') {
+//   /* eslint-disable-next-line */
+//   app.use(require('connect-livereload')({ port: 35729 }))
+//   /* eslint-disable-next-line */
+//   require('livereload')
+//     .createServer({ extraExts: ['pug'] })
+//     .watch([`${__dirname}/public`, `${__dirname}/views`])
+// }
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
@@ -42,5 +53,7 @@ app.use((err, req, res) => {
   res.status(err.status || 500)
   res.render('error')
 })
+
+console.log(`It's alive`)
 
 module.exports = app
