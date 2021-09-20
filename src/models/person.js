@@ -1,18 +1,48 @@
 require('colors')
 
-class Person {
-  constructor(firstName, lastName, birthDate, pronouns, email) {
-    this.firstName = firstName
-    this.lastName = lastName
-    this.pronouns = pronouns
-    this.birthDate = birthDate
-    this.email = email
-    this.bio = ''
-    this.photos = []
-    this.likes = []
-    this.sports = []
-  }
+const mongoose = require('mongoose')
+const autopopulate = require('mongoose-autopopulate')
 
+const personSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+    index: true,
+  },
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
+  },
+  pronouns: String,
+  birthDate: String,
+  email: String,
+  bio: String,
+  photos: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Photo',
+      autopopulate: true,
+    },
+  ],
+  likes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Photo',
+    },
+  ],
+  sports: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Sport',
+    },
+  ],
+})
+
+class Person {
   get fullName() {
     return `${this.firstName} ${this.lastName}`
   }
@@ -21,14 +51,14 @@ class Person {
     return `
         # ${this.fullName.brightRed.bold} 
         ## Pronouns: ${this.pronouns}
-        ## Bio: ${this.bio.italic}
+        ## Bio: ${this.bio}
 
         ## ${'Photos:'.white.bold} (${this.photos.length})
 
         ${this.photos
           .map(
             photo => `### ${photo.filename.rainbow}
-            💗  ${photo.likedBy.map(person => person.fullName.italic).join(', ')}`
+            💗  ${photo.likedBy.map(person => person.fullName).join(', ')}`
           )
           .join('\n\t')}
 
@@ -62,4 +92,9 @@ class Person {
   }
 }
 
-module.exports = Person
+personSchema.loadClass(Person)
+personSchema.plugin(autopopulate)
+
+personSchema.index({ username: 1 }, { name: 'unique_index_username', unique: true })
+
+module.exports = mongoose.model('Person', personSchema)
