@@ -2,9 +2,9 @@ const request = require('supertest')
 const app = require('../src/app')
 
 describe('Users endpoint', () => {
-  test('it should pass', () => {
-    expect(true).toBe(true)
-  })
+  // test('it should pass', () => {
+  //   expect(true).toBe(true)
+  // })
 
   it('post request to /users should create a user', async () => {
     const userToCreate = {
