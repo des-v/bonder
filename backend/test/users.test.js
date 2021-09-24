@@ -8,6 +8,7 @@ describe('Users endpoint', () => {
 
   it('post request to /users should create a user', async () => {
     const userToCreate = {
+      username: 'IamSoUnique',
       firstName: 'Anna',
       lastName: 'Doe',
       email: 'anna.doe@example.com',
@@ -15,6 +16,7 @@ describe('Users endpoint', () => {
     }
 
     const createdUser = (await request(app).post('/api/users').send(userToCreate)).body
+    expect(createdUser.username).toBe(userToCreate.username)
     expect(createdUser.firstName).toBe(userToCreate.firstName)
     expect(createdUser.lastName).toBe(userToCreate.lastName)
     expect(createdUser.email).toBe(userToCreate.email)
