@@ -14,7 +14,7 @@ describe('Users endpoint', () => {
       bio: 'Artist on the move',
     }
 
-    const createdUser = (await request(app).post('/users').send(userToCreate)).body
+    const createdUser = (await request(app).post('/api/users').send(userToCreate)).body
     expect(createdUser.firstName).toBe(userToCreate.firstName)
     expect(createdUser.lastName).toBe(userToCreate.lastName)
     expect(createdUser.email).toBe(userToCreate.email)
@@ -22,7 +22,7 @@ describe('Users endpoint', () => {
   })
 
   it('get request to /users should list users', async () => {
-    const userList = (await request(app).get('/users')).body
+    const userList = (await request(app).get('/api/users')).body
     const usersExist = userList.length > 0
 
     expect(usersExist).toBe(true)
