@@ -3,9 +3,16 @@
         "airbnb",
         "prettier"
     ],
+    "plugins": [
+        "jest"
+    ],
     "rules": {
         "eqeqeq": "off",
-        "class-methods-use-this": "off"
+        "class-methods-use-this": "off",
+        "no-underscore-dangle": "off"
+    },
+    "env": {
+        "jest/globals": true
     },
     "settings": {
         "react": {

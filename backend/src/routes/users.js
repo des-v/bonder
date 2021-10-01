@@ -20,6 +20,18 @@ router.get('/', async (req, res) => {
   res.send(await User.find(query))
 })
 
+/* POST create a user */
+router.post('/', async (req, res) => {
+  const userToCreate = {
+    username: req.body.username,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+  }
+  const createdUser = await User.create(userToCreate)
+  res.send(createdUser)
+})
+
 router.get('/initialize', async (req, res) => {
   const jane = await User.create({
     username: 'IamUnique',
@@ -58,7 +70,7 @@ router.get('/initialize', async (req, res) => {
 router.get('/:userId', async (req, res) => {
   const user = await User.findById(req.params.userId)
 
-  if (user) res.render('user', { user })
+  if (user) res.send(user)
   else res.sendStatus(404)
 })
 
