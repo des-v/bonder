@@ -33,18 +33,24 @@ router.post('/', async (req, res) => {
 })
 
 router.get('/initialize', async (req, res) => {
-  const jane = await User.create({
+  const jane = new User({
     username: 'IamUnique',
     firstName: 'Jane',
     lastName: 'Doe',
     email: 'janedoe@example.com',
   })
-  const john = await User.create({
+  await jane.setPassword('test')
+  await jane.save()
+
+  const john = new User({
     username: 'IamAlsoUnique',
     firstName: 'John',
     lastName: 'Smith',
     email: 'johnsmith@example.com',
   })
+
+    await john.setPassword('test')
+    await john.save()
 
   const berlinPhoto = await Photo.create({ filename: 'berlin.jpg' })
   const munichPhoto = await Photo.create({ filename: 'munich.jpg' })
