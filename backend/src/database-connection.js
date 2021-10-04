@@ -19,15 +19,4 @@ mongoose
   .then(() => console.log('connection established'))
   .catch(console.log)
 
-const Panda = mongoose.model('Panda', { name: String, age: Number })
-
-async function main() {
-  const pandas = await Panda.find({ age: { $gte: 21 } })
-  console.log(pandas)
-}
-
-main()
-
-// const panda = new Panda({ name: 'eli', age: 26 })
-
-// panda.save().then(() => console.log(`we have a new panda, ${panda.name}!`))
+module.exports = mongoose.connection
