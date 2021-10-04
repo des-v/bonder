@@ -8,11 +8,23 @@ const cookieParser = require('cookie-parser')
 
 const logger = require('morgan')
 
+const session = require('express-session')
+
+const MongoStore = require('connect-mongo')
+
+const passport = require('passport')
+
+const mongoose = require('mongoose')
+
+const mongooseConnection = require('./database-connection')
+
+const User = require('./models/person')
+
 const indexRouter = require('./routes/index')
 
 const usersRouter = require('./routes/users')
 
-require('./database-connection')
+const accountsRouter = require('./routes/accounts')
 
 const app = express()
 
@@ -33,9 +45,49 @@ app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
+
+mongoose.connect(process.env.MONGODB_CONNECTION_STRING)
+
+const clientPromise = new Promise((resolve, reject) => {
+  resolve(mongooseConnection.getClient())
+  reject(new Error('MongoClient Error'))
+})
+
+app.use(
+  session({
+    secret: ['thisisnotasupersecuresecretsecret', 'thisisanothernotasupersecuresecretsecret'],
+    store: MongoStore.create({
+      clientPromise, stringify: false,
+    }),
+    cookie: {
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+      path: '/api',
+    }
+  })
+)
+
+// Configure passport middleware
+app.use(passport.initialize())
+app.use(passport.session())
+
+passport.use(User.createStrategy())
+
+passport.serializeUser(User.serializeUser())
+passport.deserializeUser(User.deserializeUser())
+
 app.use(express.static(path.join(__dirname, 'public')))
 
+// set session view count
+app.use('/api', (req, res, next) => {
+  req.session.viewCount = req.session.viewCount || 0
+  // eslint-disable-next-line no-plusplus
+  req.session.viewCount++
+  next()
+})
+
+
 app.use('/api/', indexRouter)
+app.use('/api/account', accountsRouter)
 app.use('/api/users', usersRouter)
 
 // catch 404 and forward to error handler
