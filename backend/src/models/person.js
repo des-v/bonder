@@ -20,7 +20,6 @@ const personSchema = new mongoose.Schema({
   },
   pronouns: String,
   birthDate: String,
-  email: String,
   bio: String,
   photos: [
     {
