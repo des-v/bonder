@@ -2,6 +2,7 @@ require('colors')
 
 const mongoose = require('mongoose')
 const autopopulate = require('mongoose-autopopulate')
+const passportLocalMongoose = require('passport-local-mongoose')
 
 const personSchema = new mongoose.Schema({
   username: {
@@ -19,7 +20,6 @@ const personSchema = new mongoose.Schema({
   },
   pronouns: String,
   birthDate: String,
-  email: String,
   bio: String,
   photos: [
     {
@@ -94,6 +94,9 @@ class Person {
 
 personSchema.loadClass(Person)
 personSchema.plugin(autopopulate)
+personSchema.plugin(passportLocalMongoose, {
+  usernameField: 'email',
+})
 
 personSchema.index({ username: 1 }, { name: 'unique_index_username', unique: true })
 
