@@ -7,18 +7,19 @@ const User = require('../models/person')
 const router = express.Router()
 
 router.get('/session', (req, res) => {
-    res.send(req.session)
+    res.send(req.user)
 })
 
 // eslint-disable-next-line no-unused-vars
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
     const { username, firstName, lastName, email, password } = req.body
 
-    const user = new User({ username, firstName, lastName, email })
-    await user.setPassword(password)
-    await user.save()
-
-    return user
+    try {
+        const user = await User.register({ username, firstName, lastName, email }, password)
+        res.send(user)
+    } catch (error) {
+        next(error)
+    }
 })
 
 router.post('/session',
@@ -28,9 +29,15 @@ router.post('/session',
     }
 )
 
-router.delete('/session', (req, res) => {
-    req.logout()
-    res.send(true)
+router.delete('/session', async (req, res, next) => {
+    await req.logout()
+
+    req.session.regenerate(error => {
+        if (error) return next(error)
+
+        return res.sendStatus(200)
+    })
 })
+
 
 module.exports = router
