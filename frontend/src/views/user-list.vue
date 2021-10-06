@@ -29,3 +29,22 @@ export default {
       router-link(:to="`/users/${user._id}`") {{ user.firstName }}
     Counter
 </template>
+
+<style lang="scss" scoped>
+  .home {
+    background-color: rgb(180, 180, 180);
+    padding: 1rem;
+    p {
+      font-size: 0.8rem;
+    }
+  }
+  a {
+      font-weight: bold;
+      color: #2c3e50;
+      padding: 1rem;
+
+      &.router-link-exact-active {
+        color: #42b983;
+    }
+  }
+</style>
