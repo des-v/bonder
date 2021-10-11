@@ -1,0 +1,6 @@
+node_modules
+.prettierignore
+.prettierrc
+test
+jest.config.js 
+jest.setup.js
