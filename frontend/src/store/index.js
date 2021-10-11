@@ -2,6 +2,9 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 
+axios.defaults.baseURL = process.env.VUE_APP_BASE_URL
+axios.defaults.withCredentials = true
+
 Vue.use(Vuex)
 
 const mutations = {
@@ -27,24 +30,20 @@ const store = new Vuex.Store({
       commit(mutations.INCREMENT_COUNT)
     },
     async fetchUser(store, id) {
-      const userRequest = await axios.get(`/api/users/${id}`)
-      return userRequest.data
+      const userResponse = await axios.get(`/api/users/${id}`)
+      return userResponse.data
     },
     async fetchUsers() {
-      const userRequest = await axios.get(`/api/users`)
-      return userRequest.data
+      const userResponse = await axios.get(`/api/users`)
+      return userResponse.data
     },
     async fetchSession({ commit }) {
-      const user = await axios.get(`/api/account/session`)
-      commit(mutations.SET_USER, user.data || null)
+      const userResponse = await axios.get(`/api/account/session`)
+      commit(mutations.SET_USER, userResponse.data || null)
     },
     async login({ commit }, credentials) {
-      try {
-        const user = await axios.post('/api/account/session', credentials)
-        commit(mutations.SET_USER, null)
-      } catch (error) {
-        throw error
-      }
+      const userResponse = await axios.post('/api/account/session', credentials)
+      commit(mutations.SET_USER, userResponse.data || null)
     },
     async register(store, user) {
       return axios.post('/api/account', user)
