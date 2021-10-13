@@ -43,8 +43,8 @@ export default {
             h1 Create a new account
             label(for="username") Username:&nbsp;
                 input(v-model="username" id="username" type="text" placeholder="Your username" autocomplete='username' required)
-            label(for="fisrt-name") First Name:&nbsp;
-                input(v-model="firstName" id="first-name" type="text" placeholder="Your fisrt name" required)
+            label(for="first-name") First Name:&nbsp;
+                input(v-model="firstName" id="first-name" type="text" placeholder="Your first name" required)
             label(for="last-name") Last Name:&nbsp;
                 input(v-model="lastName" id="last-name" type="text" placeholder="Your last name" required)
             label(for="email") Email:&nbsp;
