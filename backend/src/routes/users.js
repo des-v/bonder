@@ -34,19 +34,19 @@ router.post('/', async (req, res) => {
 
 router.get('/initialize', async (req, res) => {
   const jane = new User({
-    username: 'IamUnique',
+    username: `IamSoUnique${Math.random()}`,
     firstName: 'Jane',
     lastName: 'Doe',
-    email: 'janedoe@example.com',
+    email: `janedoe${Math.random()}@example.com`,
   })
   await jane.setPassword('test')
   await jane.save()
 
   const john = new User({
-    username: 'IamAlsoUnique',
+    username: `IamAlsoUnique${Math.random()}`,
     firstName: 'John',
     lastName: 'Smith',
-    email: 'johnsmith@example.com',
+    email: `johnsmith${Math.random()}@example.com`,
   })
 
     await john.setPassword('test')
