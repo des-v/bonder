@@ -7,7 +7,7 @@ describe('Users endpoint', () => {
       username: `IamSoUnique${Math.random()}`,
       firstName: 'Anna',
       lastName: 'Doe',
-      email: 'anna.doe@example.com',
+      email: `anna.doe${Math.random()}@example.com`,
     }
 
     const createdUser = (await request(app).post('/api/users').send(userToCreate)).body
