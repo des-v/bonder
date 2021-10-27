@@ -18,6 +18,8 @@ const cors = require('cors')
 
 const mongooseConnection = require('./database-connection')
 
+const socketService = require('./socket-service')
+
 const User = require('./models/person')
 
 const indexRouter = require('./routes/index')
@@ -43,6 +45,8 @@ app.use(cors({
 // }
 
 app.set('trust proxy', 1)
+
+app.set('io', socketService)
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
@@ -99,14 +103,22 @@ app.use((req, res, next) => {
 })
 
 // error handler
-app.use((err, req, res) => {
+// eslint-disable-next-line no-unused-vars
+app.use((error, req, res, next) => {
   // set locals, only providing error in development
-  res.locals.message = err.message
-  res.locals.error = req.app.get('env') === 'development' ? err : {}
+  res.locals.message = error.message
+  res.locals.error = req.app.get('env') === 'development' ? error : {}
 
   // render the error page
-  res.status(err.status || 500)
+  res.status(error.status || 500)
   res.render('error')
+
+  res.send({
+    status: error.status,
+    message: error.message,
+    stack: req.app.get('env') == 'development' ? error.stack : '',
+  })
+
 })
 
 console.log(`It's alive`)
