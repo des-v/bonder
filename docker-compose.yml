@@ -4,7 +4,7 @@ services:
     image: frontend
     build:
       context: frontend
-      dockerfile: Dockerfile
+      dockerfile: dev.Dockerfile
     labels:
       - 'traefik.enable=true'
       - 'traefik.http.routers.frontend.rule=Host(`bonder.localhost`)'
@@ -18,17 +18,17 @@ services:
     image: backend
     build:
       context: backend
-      dockerfile: Dockerfile
+      dockerfile: dev.Dockerfile
     environment:
       # - MONGODB_USERNAME
       # - MONGODB_PASSWORD
       # - MONGODB_DATABASE
       - MONGODB_CONNECTION_STRING=mongodb://mongo/cicd201
-      - HOST=0.0.0.0
-      - CHOKIDAR_USEPOLLING=true
+      # - HOST=0.0.0.0
+      # - CHOKIDAR_USEPOLLING=true
     labels:
       - 'traefik.enable=true'
-      - 'traefik.http.routers.backend.rule=(Host(`bonder.localhost`) && PathPrefix(`/api`))'
+      - 'traefik.http.routers.backend.rule=(Host(`bonder.localhost`) && (PathPrefix(`/api`) || PathPrefix(`/socket`)))'
       - 'traefik.http.routers.backend.entrypoints=web'
 
     ports:
