@@ -21,8 +21,8 @@ export default {
     #nav
       router-link(to="/*") Home
       router-link(to="/profile" v-if="user") Profile
-      router-link(to="/login") Login
-      router-link(to="/register") Register
+      router-link(to="/login" v-if="!user") Login
+      router-link(to="/register" v-if="!user") Register
       a(@click="doLogout" href="#" v-if="user") Logout
     router-view
 </template>
