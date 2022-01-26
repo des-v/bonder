@@ -1,22 +1,18 @@
 {
     "extends": [
-        "airbnb",
+        "airbnb-base",
         "prettier"
     ],
     "plugins": [
-        "jest"
+        "jest/recommended"
     ],
     "rules": {
+        "prettier/prettier": "error",
         "eqeqeq": "off",
         "class-methods-use-this": "off",
         "no-underscore-dangle": "off"
     },
     "env": {
         "jest/globals": true
-    },
-    "settings": {
-        "react": {
-            "version": "latest"
-        }
     }
 }
